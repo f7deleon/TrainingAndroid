@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GeoQuiz</string>
+    <string name="_true">True</string>
+    <string name="_false">False</string>
+    <string name="question_text">Canberra is the capital of Australia.</string>
+    <string name="correct">Correct!</string>
+    <string name="incorrect">Incorrect!</string>
+</resources>
