@@ -1,4 +1,4 @@
-# Topspot Android
+# GeoQuiz Android
 
 This is the README for GeoQuiz. The app is to be a geography quiz game.
 
