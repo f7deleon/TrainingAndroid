@@ -25,6 +25,7 @@ android {
 }
 
 final ANDROID_SUPPORT_VERSION = '27.1.1'
+final TIMBER_SUPPORT_VERSION = '4.7.0'
 
 dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -32,7 +33,8 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "com.jakewharton.timber:timber:${TIMBER_SUPPORT_VERSION}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     testImplementation 'junit:junit:4.12'
 }
