@@ -17,7 +17,6 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var answered: Array<Boolean>
     private lateinit var cheated: Array<Boolean>
 
-
     companion object {
         const val KEY_INDEX = "index"
         const val ANS_INDEX = "ans_index"
@@ -40,8 +39,8 @@ class QuizActivity : AppCompatActivity() {
             cheated = savedInstanceState.getBooleanArray(CHT_INDEX).toTypedArray()
             onQuestionAnswered()
         } else {
-            answered = Array<Boolean>(quizController.size) { false }
-            cheated = Array<Boolean>(quizController.size) { false }
+            answered = Array(quizController.size) { false }
+            cheated = Array(quizController.size) { false }
         }
 
         txtQuestion.setText(quizController.getQuestion(index).textResId)
@@ -76,7 +75,6 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         Timber.d("onResume() called")
@@ -105,7 +103,6 @@ class QuizActivity : AppCompatActivity() {
         Timber.i("onSaveInstanceState")
     }
 
-
     private fun onQuestionAnswered() {
         when (answered[index]) {
             true -> {
@@ -124,12 +121,12 @@ class QuizActivity : AppCompatActivity() {
 
         if (requestCode == REQUEST_CODE_CHEAT) {
             if (data == null) return
-            if(!cheated[index])cheated.set(index, true)
+            if (!cheated[index]) cheated.set(index, true)
         }
     }
 
     private fun showAnswerResult(answer: Boolean) {
-        val answer =
+        val message =
                 if (cheated[index]) R.string.judgment_alert
                 else
                     when (quizController.checkAnswerResult(answer, index)) {
@@ -137,10 +134,9 @@ class QuizActivity : AppCompatActivity() {
                         false -> R.string.incorrect
                     }
 
-        with(Toast.makeText(this, answer, Toast.LENGTH_SHORT)) {
+        with(Toast.makeText(this, message, Toast.LENGTH_SHORT)) {
             setGravity(Gravity.TOP, 0, 200)
             show()
         }
     }
 }
-

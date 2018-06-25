@@ -22,7 +22,6 @@ class CheatActivity : AppCompatActivity() {
             return intent
         }
 
-        fun wasAnswerShown(result: Intent) = result.getBooleanArrayExtra(EXTRA_ANSWER_SHOWN)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,21 +31,21 @@ class CheatActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             answerIsTrue = savedInstanceState.getBoolean(ANS_INDEX)
             answerWasShown = savedInstanceState.getBoolean(SHW_INDEX)
-            if (answerWasShown){
+            if (answerWasShown) {
                 showAnswer()
                 setAnswerShowResult(true)
             }
-        }else {
+        } else {
             answerIsTrue = intent.getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false)
         }
 
         btnShowAnswer.setOnClickListener {
-                showAnswer()
-                setAnswerShowResult(true)
+            showAnswer()
+            setAnswerShowResult(true)
         }
     }
 
-    fun showAnswer(){
+    private fun showAnswer() {
         if (answerIsTrue) {
             txtAnswer.setText(R.string._true)
         } else {
