@@ -12,4 +12,8 @@
     <string name="incorrect">Incorrect!</string>
     <string name="next">next</string>
     <string name="prev">prev </string>
+    <string name="warning_text">Are you sure you want to do this?</string>
+    <string name="show_answer">Show Answer</string>
+    <string name="cheat">Cheat!</string>
+    <string name="judgment_alert">Cheating is wrong.</string>
 </resources>

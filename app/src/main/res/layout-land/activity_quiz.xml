@@ -72,6 +72,13 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnCheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cheat"
+            />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
