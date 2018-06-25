@@ -12,11 +12,13 @@ import timber.log.Timber.DebugTree
 class QuizActivity : AppCompatActivity() {
     private val quizController = QuizController()
     private var index = 0
-    private val TAG = "QuizActivity"
-    private val KEY_INDEX = "index"
-    private val ANS_INDEX = "ans_index"
     private lateinit var answered: Array<Boolean>
 
+    companion object {
+        const val KEY_INDEX = "index"
+        const val ANS_INDEX = "ans_index"
+    }
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate(Bundle) called")
@@ -29,7 +31,7 @@ class QuizActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             index = savedInstanceState.getInt(KEY_INDEX)
             answered = savedInstanceState.getBooleanArray(ANS_INDEX).toTypedArray()
-            questionAnswered()
+            onQuestionAnswered()
         } else {
             answered = Array<Boolean>(quizController.size) { false }
         }
@@ -39,7 +41,7 @@ class QuizActivity : AppCompatActivity() {
         btnNext.setOnClickListener {
             index = (index + 1) % quizController.size
             txtQuestion.setText(quizController.getQuestion(index).textResId)
-            questionAnswered()
+            onQuestionAnswered()
         }
         btnPrev.setOnClickListener {
             index = when (index - 1 >= 0) {
@@ -47,20 +49,21 @@ class QuizActivity : AppCompatActivity() {
                 false -> quizController.size - 1
             }
             txtQuestion.setText(quizController.getQuestion(index).textResId)
-            questionAnswered()
+            onQuestionAnswered()
         }
 
         btnTrue.setOnClickListener {
             showAnswerResult(true)
             answered.set(index, true)
-            questionAnswered()
+            onQuestionAnswered()
         }
         btnFalse.setOnClickListener {
             showAnswerResult(false)
             answered.set(index, true)
-            questionAnswered()
+            onQuestionAnswered()
         }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -89,8 +92,8 @@ class QuizActivity : AppCompatActivity() {
         Timber.i("onSaveInstanceState")
     }
 
-    private fun questionAnswered() {
-        when (answered.get(index)) {
+    private fun onQuestionAnswered() {
+        when (answered[index]) {
             true -> {
                 btnTrue.isEnabled = false
                 btnFalse.isEnabled = false
