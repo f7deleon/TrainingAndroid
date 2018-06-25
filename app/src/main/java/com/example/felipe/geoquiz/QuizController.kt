@@ -10,9 +10,9 @@ class QuizController() {
             Question(R.string.question_asia, true)
     )
 
-    public fun checkAnswerResult(message: Boolean, index: Int) = message == questionBank.get(index).isTrue
+    fun checkAnswerResult(message: Boolean, index: Int) = message == questionBank.get(index).isTrue
 
-    public fun getQuestion(index: Int) = questionBank.get(index = index).textResId
+    fun getQuestion(index: Int) = questionBank.get(index = index)
 
-    public val size get() = questionBank.size
+    val size get() = questionBank.size
 }
