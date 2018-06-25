@@ -6,11 +6,7 @@ import android.view.Gravity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_quiz.*
 import timber.log.Timber
-
 import timber.log.Timber.DebugTree
-
-
-
 
 
 class QuizActivity : AppCompatActivity() {
@@ -19,7 +15,7 @@ class QuizActivity : AppCompatActivity() {
     private val TAG = "QuizActivity"
     private val KEY_INDEX = "index"
     private val ANS_INDEX = "ans_index"
-    private lateinit var answered : Array<Boolean>
+    private lateinit var answered: Array<Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,15 +23,16 @@ class QuizActivity : AppCompatActivity() {
         setContentView(R.layout.activity_quiz)
 
         if (BuildConfig.DEBUG) {
-            Timber.plant( DebugTree())
+            Timber.plant(DebugTree())
         }
 
         if (savedInstanceState != null) {
             index = savedInstanceState.getInt(KEY_INDEX)
             answered = savedInstanceState.getBooleanArray(ANS_INDEX).toTypedArray()
             questionAnswered()
+        } else {
+            answered = Array<Boolean>(quizController.size) { false }
         }
-        else answered = Array<Boolean>(quizController.size){false};
 
         txtQuestion.setText(quizController.getQuestion(index).textResId)
 
@@ -55,12 +52,12 @@ class QuizActivity : AppCompatActivity() {
 
         btnTrue.setOnClickListener {
             showAnswerResult(true)
-            answered.set(index,true)
+            answered.set(index, true)
             questionAnswered()
         }
         btnFalse.setOnClickListener {
             showAnswerResult(false)
-            answered.set(index,true)
+            answered.set(index, true)
             questionAnswered()
         }
     }
@@ -72,23 +69,23 @@ class QuizActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        Timber.d( "onPause() called")
+        Timber.d("onPause() called")
     }
 
     override fun onStop() {
         super.onStop()
-        Timber.d( "onStop() called")
+        Timber.d("onStop() called")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Timber.d( "onDestroy() called")
+        Timber.d("onDestroy() called")
     }
 
     override fun onSaveInstanceState(savedInstanceState: Bundle?) {
         super.onSaveInstanceState(savedInstanceState)
         savedInstanceState?.putInt(KEY_INDEX, index)
-        savedInstanceState?.putBooleanArray(ANS_INDEX,answered.toBooleanArray())
+        savedInstanceState?.putBooleanArray(ANS_INDEX, answered.toBooleanArray())
         Timber.i("onSaveInstanceState")
     }
 
