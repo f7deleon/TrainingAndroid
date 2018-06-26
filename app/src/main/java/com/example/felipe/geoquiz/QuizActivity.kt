@@ -9,7 +9,8 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_quiz.*
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
 
 class QuizActivity : AppCompatActivity() {
     companion object {
@@ -31,7 +32,7 @@ class QuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate(Bundle) called")
         setContentView(R.layout.activity_quiz)
-
+        Fabric.with(this, Crashlytics())
         initTimber()
         initVariables(savedInstanceState)
         initViews()

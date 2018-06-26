@@ -27,6 +27,13 @@
 
         <activity android:name=".CheatActivity" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="5969046a2f97c655545b350a8c8d3d3c611be9b5"
+            />
+
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
