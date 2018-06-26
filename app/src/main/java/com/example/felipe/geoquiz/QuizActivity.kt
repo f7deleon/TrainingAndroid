@@ -12,19 +12,20 @@ import timber.log.Timber.DebugTree
 
 
 class QuizActivity : AppCompatActivity() {
+    companion object {
+        const val KEY_INDEX = "index"
+        const val KEY_ANS_INDEX = "ans_index"
+        const val KEY_CHT_INDEX = "cht_index"
+        const val KEY_CHEAT_TIMES_INDEX = "cheat_times_index"
+        const val REQUEST_CODE_CHEAT = 0
+    }
+
     private val quizController = QuizController()
     private var index = 0
     private lateinit var answered: Array<Boolean>
     private lateinit var cheated: Array<Boolean>
     private var cheatIndex = 0
 
-    companion object {
-        const val KEY_INDEX = "index"
-        const val ANS_INDEX = "ans_index"
-        const val CHT_INDEX = "cht_index"
-        const val CHEAT_TIMES_INDEX = "cheat_times_index"
-        const val REQUEST_CODE_CHEAT = 0
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,17 +36,12 @@ class QuizActivity : AppCompatActivity() {
             Timber.plant(DebugTree())
         }
 
-        if (savedInstanceState != null) {
-            index = savedInstanceState.getInt(KEY_INDEX)
-            answered = savedInstanceState.getBooleanArray(ANS_INDEX).toTypedArray()
-            cheated = savedInstanceState.getBooleanArray(CHT_INDEX).toTypedArray()
-            cheatIndex = savedInstanceState.getInt(CHEAT_TIMES_INDEX)
-            onQuestionAnswered()
-        } else {
-            answered = Array(quizController.size) { false }
-            cheated = Array(quizController.size) { false }
-        }
+        initCollections(savedInstanceState)
 
+        initView()
+    }
+
+    private fun initView() {
         txtQuestion.setText(quizController.getQuestion(index).textResId)
 
         btnNext.setOnClickListener {
@@ -78,6 +74,19 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
+    private fun initCollections(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            index = savedInstanceState.getInt(KEY_INDEX)
+            answered = savedInstanceState.getBooleanArray(KEY_ANS_INDEX).toTypedArray()
+            cheated = savedInstanceState.getBooleanArray(KEY_CHT_INDEX).toTypedArray()
+            cheatIndex = savedInstanceState.getInt(KEY_CHEAT_TIMES_INDEX)
+            onQuestionAnswered()
+        } else {
+            answered = Array(quizController.size) { false }
+            cheated = Array(quizController.size) { false }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         Timber.d("onResume() called")
@@ -101,9 +110,9 @@ class QuizActivity : AppCompatActivity() {
     override fun onSaveInstanceState(savedInstanceState: Bundle?) {
         super.onSaveInstanceState(savedInstanceState)
         savedInstanceState?.putInt(KEY_INDEX, index)
-        savedInstanceState?.putInt(CHEAT_TIMES_INDEX, cheatIndex)
-        savedInstanceState?.putBooleanArray(ANS_INDEX, answered.toBooleanArray())
-        savedInstanceState?.putBooleanArray(CHT_INDEX, cheated.toBooleanArray())
+        savedInstanceState?.putInt(KEY_CHEAT_TIMES_INDEX, cheatIndex)
+        savedInstanceState?.putBooleanArray(KEY_ANS_INDEX, answered.toBooleanArray())
+        savedInstanceState?.putBooleanArray(KEY_CHT_INDEX, cheated.toBooleanArray())
         Timber.i("onSaveInstanceState")
     }
 
@@ -134,8 +143,9 @@ class QuizActivity : AppCompatActivity() {
 
     private fun showAnswerResult(answer: Boolean) {
         val message =
-                if (cheated[index]) R.string.judgment_alert
-                else
+                if (cheated[index]) {
+                    R.string.judgment_alert
+                } else
                     when (quizController.checkAnswerResult(answer, index)) {
                         true -> R.string.correct
                         false -> R.string.incorrect
