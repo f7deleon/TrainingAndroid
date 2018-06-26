@@ -32,16 +32,18 @@ class QuizActivity : AppCompatActivity() {
         Timber.d("onCreate(Bundle) called")
         setContentView(R.layout.activity_quiz)
 
+        initTimber()
+        initVariables(savedInstanceState)
+        initViews()
+    }
+
+    private fun initTimber() {
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         }
-
-        initCollections(savedInstanceState)
-
-        initView()
     }
 
-    private fun initView() {
+    private fun initViews() {
         txtQuestion.setText(quizController.getQuestion(index).textResId)
 
         btnNext.setOnClickListener {
@@ -74,7 +76,7 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
-    private fun initCollections(savedInstanceState: Bundle?) {
+    private fun initVariables(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             index = savedInstanceState.getInt(KEY_INDEX)
             answered = savedInstanceState.getBooleanArray(KEY_ANS_INDEX).toTypedArray()

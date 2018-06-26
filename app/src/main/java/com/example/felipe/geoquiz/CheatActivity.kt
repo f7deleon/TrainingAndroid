@@ -34,11 +34,10 @@ class CheatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cheat)
 
         initVariables(savedInstanceState)
-
-        initView()
+        initViews()
     }
 
-    private fun initView() {
+    private fun initViews() {
         updateCheatCounter()
 
         if (CHEAT_LIMIT == cheatIndex) {
