@@ -16,4 +16,5 @@
     <string name="show_answer">Show Answer</string>
     <string name="cheat">Cheat!</string>
     <string name="judgment_alert">Cheating is wrong.</string>
+    <string name="cheats_left">Cheats left: </string>
 </resources>
